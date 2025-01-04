@@ -3,74 +3,70 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Retirement Savings Calculator</title>
+  <title>Financial Calculators</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
+  <!-- Retirement Calculator -->
+  <div class="calculator-container">
     <h1>Retirement Savings Calculator</h1>
-    <form id="calculator-form">
-      <!-- Inputs -->
+    <form id="calculator-form" onsubmit="calculateRetirement(); return false;">
       <label>Current Age:</label>
-      <input type="number" id="currentAge" value="19" required />
+      <input type="number" id="currentAge" value="19" min="0" required />
 
       <label>Retirement Age:</label>
-      <input type="number" id="retirementAge" value="65" required />
+      <input type="number" id="retirementAge" value="65" min="1" required />
 
       <label>Desired Annual Income ($):</label>
-      <input type="number" id="desiredIncome" value="100000" required />
+      <input type="number" id="desiredIncome" value="100000" min="0" required />
 
       <label>Number of Retirement Years:</label>
-      <input type="number" id="retirementYears" value="46" required />
+      <input type="number" id="retirementYears" value="30" min="1" required />
 
       <label>Expected Annual Return (%):</label>
-      <input type="number" id="annualReturn" value="10" required />
+      <input type="number" id="annualReturn" value="10" min="0" required />
 
       <label>Inflation Rate (%):</label>
-      <input type="number" id="inflationRate" value="2" required />
+      <input type="number" id="inflationRate" value="2" min="0" required />
 
       <label>Current Savings ($):</label>
-      <input type="number" id="currentSavings" value="10000" required />
+      <input type="number" id="currentSavings" value="10000" min="0" required />
 
       <label>Social Security Income ($):</label>
-      <input type="number" id="socialSecurity" value="20000" required />
+      <input type="number" id="socialSecurity" value="20000" min="0" required />
 
-      <!-- Submit -->
       <button type="submit">Calculate</button>
     </form>
 
-    <!-- Outputs -->
-    <div id="results">
-      <h2>Results:</h2>
-      <p id="incomeNeeded"></p>
-      <p id="totalSavingsNeeded"></p>
-      <p id="monthlySavingsRequired"></p>
-    </div>
+    <h2>Results:</h2>
+    <p id="retirementIncomeNeeded"></p>
+    <p id="totalRetirementSavingsNeeded"></p>
+    <p id="monthlyRetirementSavings"></p>
+  </div>
+
+  <!-- Risk-to-Reward Ratio Calculator -->
+  <div class="calculator-container">
+    <h1>Risk-to-Reward Ratio Calculator</h1>
+    <label for="investment">Investment Amount ($):</label>
+    <input type="number" id="investment" min="0" />
+
+    <label for="currentPrice">Current Price ($):</label>
+    <input type="number" id="currentPrice" min="0" />
+
+    <label for="targetPrice">Target Price ($):</label>
+    <input type="number" id="targetPrice" min="0" />
+
+    <label for="stopLossPrice">Stop-Loss Price ($):</label>
+    <input type="number" id="stopLossPrice" min="0" />
+
+    <button onclick="calculateRiskReward()">Calculate</button>
+
+    <h2>Results:</h2>
+    <p id="riskProfit"></p>
+    <p id="riskLoss"></p>
+    <p id="riskRatio"></p>
   </div>
 
   <script src="script.js"></script>
-
-  <hr />
-<div class="calculator">
-  <h1>Risk-to-Reward Ratio Calculator</h1>
-  <label for="investment">Investment Amount ($):</label>
-  <input type="number" id="investment" />
-
-  <label for="currentPrice">Current Price ($):</label>
-  <input type="number" id="currentPrice" />
-
-  <label for="targetPrice">Target Price ($):</label>
-  <input type="number" id="targetPrice" />
-
-  <label for="stopLossPrice">Stop-Loss Price ($):</label>
-  <input type="number" id="stopLossPrice" />
-
-  <button onclick="calculateRiskReward()">Calculate</button>
-
-  <h2>Results:</h2>
-  <p id="profit"></p>
-  <p id="loss"></p>
-  <p id="ratio"></p>
-</div>
 </body>
 </html>
