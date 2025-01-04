@@ -34,3 +34,35 @@ document.getElementById('calculator-form').addEventListener('submit', function (
   document.getElementById('totalSavingsNeeded').innerText = `Total Savings Needed: $${totalSavingsNeeded.toFixed(2)}`;
   document.getElementById('monthlySavingsRequired').innerText = `Monthly Savings Required: $${monthlySavings.toFixed(2)}`;
 });
+
+function calculateRiskReward() {
+  // Input values
+  const investment = parseFloat(document.getElementById("investment").value);
+  const currentPrice = parseFloat(document.getElementById("currentPrice").value);
+  const targetPrice = parseFloat(document.getElementById("targetPrice").value);
+  const stopLossPrice = parseFloat(document.getElementById("stopLossPrice").value);
+
+  // Error handling
+  if (
+    isNaN(investment) ||
+    isNaN(currentPrice) ||
+    isNaN(targetPrice) ||
+    isNaN(stopLossPrice) ||
+    currentPrice <= stopLossPrice ||
+    targetPrice <= currentPrice
+  ) {
+    alert("Please enter valid values for prices and ensure target > current > stop-loss.");
+    return;
+  }
+
+  // Calculations
+  const potentialProfit = (targetPrice - currentPrice) * (investment / currentPrice);
+  const potentialLoss = (currentPrice - stopLossPrice) * (investment / currentPrice);
+  const riskToRewardRatio = (targetPrice - currentPrice) / (currentPrice - stopLossPrice);
+
+  // Display results
+  document.getElementById("profit").innerText = `Potential Profit: $${potentialProfit.toFixed(2)}`;
+  document.getElementById("loss").innerText = `Potential Loss: $${potentialLoss.toFixed(2)}`;
+  document.getElementById("ratio").innerText = `Risk-to-Reward Ratio: ${riskToRewardRatio.toFixed(2)}:1`;
+}
+
