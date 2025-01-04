@@ -11,32 +11,39 @@ document.getElementById('calculator-form').addEventListener('submit', function (
   const currentSavings = parseFloat(document.getElementById('currentSavings').value);
   const socialSecurity = parseFloat(document.getElementById('socialSecurity').value);
 
-  // Step 1: Adjust Income for Inflation
+  // Validation
+  if (retirementAge <= currentAge) {
+    alert("Retirement age must be greater than current age.");
+    return;
+  }
+
+  // Adjusted Income
   const yearsToRetirement = retirementAge - currentAge;
   const adjustedIncome = desiredIncome * Math.pow(1 + inflationRate, yearsToRetirement);
 
-  // Step 2: Calculate Total Retirement Savings Needed
+  // Total Savings Needed
   const savingsNeeded = adjustedIncome * ((1 - Math.pow(1 + annualReturn, -retirementYears)) / annualReturn);
-
-  // Step 3: Subtract Social Security Income
   const adjustedSavingsNeeded = savingsNeeded - (socialSecurity * ((1 - Math.pow(1 + annualReturn, -retirementYears)) / annualReturn));
-
-  // Step 4: Subtract Current Savings
   const totalSavingsNeeded = adjustedSavingsNeeded - currentSavings;
 
-  // Step 5: Calculate Monthly Savings Needed
+  // Monthly Savings Calculation
   const monthlyRate = annualReturn / 12;
   const totalMonths = yearsToRetirement * 12;
-  const monthlySavings = totalSavingsNeeded * (monthlyRate / (Math.pow(1 + monthlyRate, totalMonths) - 1));
+  let monthlySavings = totalSavingsNeeded * (monthlyRate / (Math.pow(1 + monthlyRate, totalMonths) - 1));
+
+  // Handle No Additional Savings Required
+  if (totalSavingsNeeded <= 0) {
+    monthlySavings = 0;
+  }
 
   // Display Results
-  document.getElementById('incomeNeeded').innerText = `Adjusted Income Needed: $${adjustedIncome.toFixed(2)}`;
-  document.getElementById('totalSavingsNeeded').innerText = `Total Savings Needed: $${totalSavingsNeeded.toFixed(2)}`;
-  document.getElementById('monthlySavingsRequired').innerText = `Monthly Savings Required: $${monthlySavings.toFixed(2)}`;
+  document.getElementById('retirementIncomeNeeded').innerText = `Adjusted Income Needed: $${adjustedIncome.toFixed(2)}`;
+  document.getElementById('retirementTotalSavings').innerText = `Total Savings Needed: $${totalSavingsNeeded.toFixed(2)}`;
+  document.getElementById('retirementMonthlySavings').innerText = `Monthly Savings Required: $${monthlySavings.toFixed(2)}`;
 });
 
+
 function calculateRiskReward() {
-  // Input values
   const investment = parseFloat(document.getElementById("investment").value);
   const currentPrice = parseFloat(document.getElementById("currentPrice").value);
   const targetPrice = parseFloat(document.getElementById("targetPrice").value);
@@ -56,13 +63,12 @@ function calculateRiskReward() {
   }
 
   // Calculations
-  const potentialProfit = (targetPrice - currentPrice) * (investment / currentPrice);
-  const potentialLoss = (currentPrice - stopLossPrice) * (investment / currentPrice);
-  const riskToRewardRatio = (targetPrice - currentPrice) / (currentPrice - stopLossPrice);
+  const profit = (targetPrice - currentPrice) * (investment / currentPrice);
+  const loss = (currentPrice - stopLossPrice) * (investment / currentPrice);
+  const ratio = (targetPrice - currentPrice) / (currentPrice - stopLossPrice);
 
   // Display results
-  document.getElementById("profit").innerText = `Potential Profit: $${potentialProfit.toFixed(2)}`;
-  document.getElementById("loss").innerText = `Potential Loss: $${potentialLoss.toFixed(2)}`;
-  document.getElementById("ratio").innerText = `Risk-to-Reward Ratio: ${riskToRewardRatio.toFixed(2)}:1`;
+  document.getElementById("riskProfit").innerText = `Potential Profit: $${profit.toFixed(2)}`;
+  document.getElementById("riskLoss").innerText = `Potential Loss: $${loss.toFixed(2)}`;
+  document.getElementById("riskRatio").innerText = `Risk-to-Reward Ratio: ${ratio.toFixed(2)}:1`;
 }
-
