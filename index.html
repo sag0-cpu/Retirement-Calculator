@@ -49,5 +49,28 @@
   </div>
 
   <script src="script.js"></script>
+
+  <hr />
+<div class="calculator">
+  <h1>Risk-to-Reward Ratio Calculator</h1>
+  <label for="investment">Investment Amount ($):</label>
+  <input type="number" id="investment" />
+
+  <label for="currentPrice">Current Price ($):</label>
+  <input type="number" id="currentPrice" />
+
+  <label for="targetPrice">Target Price ($):</label>
+  <input type="number" id="targetPrice" />
+
+  <label for="stopLossPrice">Stop-Loss Price ($):</label>
+  <input type="number" id="stopLossPrice" />
+
+  <button onclick="calculateRiskReward()">Calculate</button>
+
+  <h2>Results:</h2>
+  <p id="profit"></p>
+  <p id="loss"></p>
+  <p id="ratio"></p>
+</div>
 </body>
 </html>
